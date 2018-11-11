@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Environment
+venv/
+
+# macOS 
+.DS_Store
+
+# plots and models
+plots/*
+models/*
+
+
+
