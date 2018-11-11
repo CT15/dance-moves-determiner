@@ -1,3 +1,4 @@
+
 import sys
 import pandas as pd
 import preprocess
@@ -16,10 +17,9 @@ def preprocess_csv(csv_name, number, interval=76):
     #df = preprocess.append_truth(df_concat, number)
     return df
 
-def load():
+def load(with_names=False):
     all_dfs = []
-    all_names = []
-
+    
     sarah_wipers_df = preprocess_csv('sarah_wipers_2.5min', 1)
     sarah_number7_df = preprocess_csv('sarah_number7_2.5min', 2)
     sarah_chicken_df = preprocess_csv('sarah_chicken_2.5min', 3)
@@ -170,39 +170,79 @@ def load():
     gary_finalmove_df = preprocess_csv('gary_finalmove_2.5min', 11)
 
     all_dfs.extend([
-    sarah_wipers_df,sarah_number7_df,sarah_chicken_df,sarah_sidestep_df,
-    sarah_turnclap1_df,sarah_turnclap2_df,sarah_number6_df,sarah_salute_df,sarah_mermaid_df,sarah_swing_df,
-    sarah_cowboy1_df,sarah_cowboy2_df,sarah_finalmove_df,
-    sarah_wipers_oct_df,sarah_number7_oct_df,sarah_chicken_oct_df,sarah_sidestep_oct_df,
-    sarah_turnclap1_oct_df,sarah_turnclap2_oct_df,sarah_number6_oct_df,sarah_salute_oct_df,sarah_mermaid_oct_df,sarah_swing_oct_df,
-    sarah_cowboy1_oct_df,sarah_cowboy2_oct_df,
-    azizi_wipers_df,azizi_number7_df,azizi_chicken_df,azizi_sidestep_df,azizi_salute_df,
-    azizi_turnclap1_df,azizi_turnclap2_df,azizi_number6_df,azizi_mermaid_df,azizi_swing_df,
-    azizi_cowboy1_df,azizi_cowboy2_df,azizi_finalmove_df,
-    azizi_wipers_oct_df,azizi_number7_oct_df,azizi_chicken_oct_df,azizi_sidestep_oct_df,azizi_salute_oct_df,
-    azizi_turnclap1_oct_df,azizi_turnclap2_oct_df,azizi_number6_oct_df,azizi_mermaid_oct_df,azizi_swing_oct_df,
-    azizi_cowboy1_oct_df,azizi_cowboy2_oct_df,
-    stanley_wipers_oct_df,stanley_number7_oct_df,stanley_chicken_oct_df,stanley_sidestep_oct_df,
-    stanley_turnclap1_oct_df,stanley_turnclap2_oct_df,stanley_number6_oct_df,stanley_salute_oct_df,stanley_mermaid_oct_df,stanley_swing_oct_df,
-    stanley_cowboy1_oct_df,stanley_cowboy2_oct_df,
-    stanley_wipers_df,stanley_number7_df,stanley_chicken_df,stanley_sidestep_df,
-    stanley_turnclap1_df,stanley_turnclap2_df,stanley_number6_df,stanley_salute_df,stanley_mermaid_df,stanley_swing_df,
-    stanley_cowboy1_df,stanley_cowboy2_df,stanley_finalmove_df,
-    kaiyan_wipers_df,kaiyan_number7_df,kaiyan_chicken_df,kaiyan_sidestep_df,
-    kaiyan_turnclap1_df,kaiyan_turnclap2_df,kaiyan_number6_df,kaiyan_salute_df,kaiyan_mermaid_df,kaiyan_swing_df,
-    kaiyan_cowboy1_df,kaiyan_cowboy2_df,kaiyan_finalmove_df,
-    calvin_wipers_df,calvin_number7_df,calvin_chicken_df,calvin_sidestep_df,
-    calvin_turnclap1_df,calvin_turnclap2_df,calvin_number6_df,calvin_salute_df,calvin_mermaid_df,calvin_swing_df,
-    calvin_cowboy1_df,calvin_cowboy2_df,calvin_finalmove_df,
-    calvin_wipers_oct_df,calvin_number7_oct_df,calvin_chicken_oct_df,calvin_sidestep_oct_df,
-    calvin_turnclap1_oct_df,calvin_turnclap2_oct_df,calvin_number6_oct_df,calvin_salute_oct_df,calvin_mermaid_oct_df,calvin_swing_oct_df,
-    calvin_cowboy1_oct_df,calvin_cowboy2_oct_df,
-    gary_wipers_df,gary_number7_df,gary_chicken_df,gary_sidestep_df,
-    gary_turnclap1_df,gary_turnclap2_df,gary_number6_df,gary_salute_df,gary_mermaid_df,gary_swing_df,
-    gary_cowboy1_df,gary_cowboy2_df,gary_finalmove_df,
-    gary_wipers_oct_df,gary_number7_oct_df,gary_chicken_oct_df,gary_sidestep_oct_df,
-    gary_turnclap1_oct_df,gary_turnclap2_oct_df,gary_number6_oct_df,gary_salute_oct_df,gary_mermaid_oct_df,gary_swing_oct_df,
-    gary_cowboy1_oct_df,gary_cowboy2_oct_df
+        sarah_wipers_df,sarah_number7_df,sarah_chicken_df,sarah_sidestep_df,
+        sarah_turnclap1_df,sarah_turnclap2_df,sarah_number6_df,sarah_salute_df,sarah_mermaid_df,sarah_swing_df,
+        sarah_cowboy1_df,sarah_cowboy2_df,sarah_finalmove_df,
+        sarah_wipers_oct_df,sarah_number7_oct_df,sarah_chicken_oct_df,sarah_sidestep_oct_df,
+        sarah_turnclap1_oct_df,sarah_turnclap2_oct_df,sarah_number6_oct_df,sarah_salute_oct_df,sarah_mermaid_oct_df,sarah_swing_oct_df,
+        sarah_cowboy1_oct_df,sarah_cowboy2_oct_df,
+        azizi_wipers_df,azizi_number7_df,azizi_chicken_df,azizi_sidestep_df,azizi_salute_df,
+        azizi_turnclap1_df,azizi_turnclap2_df,azizi_number6_df,azizi_mermaid_df,azizi_swing_df,
+        azizi_cowboy1_df,azizi_cowboy2_df,azizi_finalmove_df,
+        azizi_wipers_oct_df,azizi_number7_oct_df,azizi_chicken_oct_df,azizi_sidestep_oct_df,azizi_salute_oct_df,
+        azizi_turnclap1_oct_df,azizi_turnclap2_oct_df,azizi_number6_oct_df,azizi_mermaid_oct_df,azizi_swing_oct_df,
+        azizi_cowboy1_oct_df,azizi_cowboy2_oct_df,
+        stanley_wipers_oct_df,stanley_number7_oct_df,stanley_chicken_oct_df,stanley_sidestep_oct_df,
+        stanley_turnclap1_oct_df,stanley_turnclap2_oct_df,stanley_number6_oct_df,stanley_salute_oct_df,stanley_mermaid_oct_df,stanley_swing_oct_df,
+        stanley_cowboy1_oct_df,stanley_cowboy2_oct_df,
+        stanley_wipers_df,stanley_number7_df,stanley_chicken_df,stanley_sidestep_df,
+        stanley_turnclap1_df,stanley_turnclap2_df,stanley_number6_df,stanley_salute_df,stanley_mermaid_df,stanley_swing_df,
+        stanley_cowboy1_df,stanley_cowboy2_df,stanley_finalmove_df,
+        kaiyan_wipers_df,kaiyan_number7_df,kaiyan_chicken_df,kaiyan_sidestep_df,
+        kaiyan_turnclap1_df,kaiyan_turnclap2_df,kaiyan_number6_df,kaiyan_salute_df,kaiyan_mermaid_df,kaiyan_swing_df,
+        kaiyan_cowboy1_df,kaiyan_cowboy2_df,kaiyan_finalmove_df,
+        calvin_wipers_df,calvin_number7_df,calvin_chicken_df,calvin_sidestep_df,
+        calvin_turnclap1_df,calvin_turnclap2_df,calvin_number6_df,calvin_salute_df,calvin_mermaid_df,calvin_swing_df,
+        calvin_cowboy1_df,calvin_cowboy2_df,calvin_finalmove_df,
+        calvin_wipers_oct_df,calvin_number7_oct_df,calvin_chicken_oct_df,calvin_sidestep_oct_df,
+        calvin_turnclap1_oct_df,calvin_turnclap2_oct_df,calvin_number6_oct_df,calvin_salute_oct_df,calvin_mermaid_oct_df,calvin_swing_oct_df,
+        calvin_cowboy1_oct_df,calvin_cowboy2_oct_df,
+        gary_wipers_df,gary_number7_df,gary_chicken_df,gary_sidestep_df,
+        gary_turnclap1_df,gary_turnclap2_df,gary_number6_df,gary_salute_df,gary_mermaid_df,gary_swing_df,
+        gary_cowboy1_df,gary_cowboy2_df,gary_finalmove_df,
+        gary_wipers_oct_df,gary_number7_oct_df,gary_chicken_oct_df,gary_sidestep_oct_df,
+        gary_turnclap1_oct_df,gary_turnclap2_oct_df,gary_number6_oct_df,gary_salute_oct_df,gary_mermaid_oct_df,gary_swing_oct_df,
+        gary_cowboy1_oct_df,gary_cowboy2_oct_df
     ])
+
+    if with_names:
+        all_names = []
+        all_names.extend([
+            'sarah_wipers_df' ,'sarah_number7_df' ,'sarah_chicken_df' ,'sarah_sidestep_df',
+            'sarah_turnclap1_df' ,'sarah_turnclap2_df' ,'sarah_number6_df' ,'sarah_salute_df' ,'sarah_mermaid_df' ,'sarah_swing_df',
+            'sarah_cowboy1_df' ,'sarah_cowboy2_df' ,'sarah_finalmove_df',
+            'sarah_wipers_oct_df' ,'sarah_number7_oct_df' ,'sarah_chicken_oct_df' ,'sarah_sidestep_oct_df',
+            'sarah_turnclap1_oct_df' ,'sarah_turnclap2_oct_df' ,'sarah_number6_oct_df' ,'sarah_salute_oct_df' ,'sarah_mermaid_oct_df' ,'sarah_swing_oct_df',
+            'sarah_cowboy1_oct_df' ,'sarah_cowboy2_oct_df',
+            'azizi_wipers_df' ,'azizi_number7_df' ,'azizi_chicken_df' ,'azizi_sidestep_df' ,'azizi_salute_df',
+            'azizi_turnclap1_df' ,'azizi_turnclap2_df' ,'azizi_number6_df' ,'azizi_mermaid_df' ,'azizi_swing_df',
+            'azizi_cowboy1_df' ,'azizi_cowboy2_df' ,'azizi_finalmove_df',
+            'azizi_wipers_oct_df' ,'azizi_number7_oct_df' ,'azizi_chicken_oct_df' ,'azizi_sidestep_oct_df' ,'azizi_salute_oct_df',
+            'azizi_turnclap1_oct_df' ,'azizi_turnclap2_oct_df' ,'azizi_number6_oct_df' ,'azizi_mermaid_oct_df' ,'azizi_swing_oct_df',
+            'azizi_cowboy1_oct_df' ,'azizi_cowboy2_oct_df',
+            'stanley_wipers_oct_df' ,'stanley_number7_oct_df' ,'stanley_chicken_oct_df' ,'stanley_sidestep_oct_df',
+            'stanley_turnclap1_oct_df' ,'stanley_turnclap2_oct_df' ,'stanley_number6_oct_df' ,'stanley_salute_oct_df' ,'stanley_mermaid_oct_df' ,'stanley_swing_oct_df',
+            'stanley_cowboy1_oct_df' ,'stanley_cowboy2_oct_df',
+            'stanley_wipers_df' ,'stanley_number7_df' ,'stanley_chicken_df' ,'stanley_sidestep_df',
+            'stanley_turnclap1_df' ,'stanley_turnclap2_df' ,'stanley_number6_df' ,'stanley_salute_df' ,'stanley_mermaid_df' ,'stanley_swing_df',
+            'stanley_cowboy1_df' ,'stanley_cowboy2_df' ,'stanley_finalmove_df',
+            'kaiyan_wipers_df' ,'kaiyan_number7_df' ,'kaiyan_chicken_df' ,'kaiyan_sidestep_df',
+            'kaiyan_turnclap1_df' ,'kaiyan_turnclap2_df' ,'kaiyan_number6_df' ,'kaiyan_salute_df' ,'kaiyan_mermaid_df' ,'kaiyan_swing_df',
+            'kaiyan_cowboy1_df' ,'kaiyan_cowboy2_df' ,'kaiyan_finalmove_df',
+            'calvin_wipers_df' ,'calvin_number7_df' ,'calvin_chicken_df' ,'calvin_sidestep_df',
+            'calvin_turnclap1_df' ,'calvin_turnclap2_df' ,'calvin_number6_df' ,'calvin_salute_df' ,'calvin_mermaid_df' ,'calvin_swing_df',
+            'calvin_cowboy1_df' ,'calvin_cowboy2_df' ,'calvin_finalmove_df',
+            'calvin_wipers_oct_df' ,'calvin_number7_oct_df' ,'calvin_chicken_oct_df' ,'calvin_sidestep_oct_df',
+            'calvin_turnclap1_oct_df' ,'calvin_turnclap2_oct_df' ,'calvin_number6_oct_df' ,'calvin_salute_oct_df' ,'calvin_mermaid_oct_df' ,'calvin_swing_oct_df',
+            'calvin_cowboy1_oct_df' ,'calvin_cowboy2_oct_df',
+            'gary_wipers_df' ,'gary_number7_df' ,'gary_chicken_df' ,'gary_sidestep_df',
+            'gary_turnclap1_df' ,'gary_turnclap2_df' ,'gary_number6_df' ,'gary_salute_df' ,'gary_mermaid_df' ,'gary_swing_df',
+            'gary_cowboy1_df' ,'gary_cowboy2_df' ,'gary_finalmove_df',
+            'gary_wipers_oct_df' ,'gary_number7_oct_df' ,'gary_chicken_oct_df' ,'gary_sidestep_oct_df',
+            'gary_turnclap1_oct_df' ,'gary_turnclap2_oct_df' ,'gary_number6_oct_df' ,'gary_salute_oct_df' ,'gary_mermaid_oct_df' ,'gary_swing_oct_df',
+            'gary_cowboy1_oct_df' ,'gary_cowboy2_oct_df'
+        ])
+
+        return (all_dfs, all_names)
 
     return all_dfs
