@@ -6,10 +6,3 @@ venv/
 
 # macOS 
 .DS_Store
-
-# plots and models
-plots/*
-models/*
-
-
-
