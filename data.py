@@ -8,7 +8,7 @@ import preprocess
 # SideStep ==> 4        # Swing ==> 9
 # TurnClap ==> 5        # Cowboy ==> 10
 def prepare_data(csv_name, number, interval=76, preprocess=True):
-    df = pd.read_csv(sys.path[0] + '/data/' + csv_name + '.csv', header=None, preprocess=preprocess)
+    df = pd.read_csv(sys.path[0] + '/train_data/' + csv_name + '.csv', header=None, preprocess=preprocess)
 #    df = preprocess.normalise(df, preprocess=preprocess)
     if preprocess:
         df_max_min = preprocess.flatten(df, interval, preprocess=preprocess)
