@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, KFold
 
-# Return a flattened df of the specified feature (either 'max_min' or 'std')
+# Return a flattened df of the specified feature (either 'max_min' or 'var')
 def flatten(df, feature='max_min', interval=80):
     result_df = pd.DataFrame()
 
@@ -16,9 +16,9 @@ def flatten(df, feature='max_min', interval=80):
             max_minus_min = pd.Series(np.ptp(subset[subset.columns].values, axis=0))
             result_df = result_df.append(max_minus_min, ignore_index=True)
 
-        if feature == 'std':
-            std = pd.Series(np.std(subset[subset.columns].values, axis=0))
-            result_df = result_df.append(std, ignore_index=True)
+        if feature == 'var':
+            var = pd.Series(np.var(subset[subset.columns].values, axis=0))
+            result_df = result_df.append(var, ignore_index=True)
 
     return result_df
 

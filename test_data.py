@@ -12,8 +12,8 @@ def prepare_data(csv_name, number, interval=76, preprocess=True):
 #    df = preprocess.normalise(df, preprocess=preprocess)
     if preprocess:
         df_max_min = preprocess.flatten(df, interval, preprocess=preprocess)
-        df_std = preprocess.flatten(df, 'std', interval, preprocess=preprocess)
-        df_concat = preprocess.concat_df(df_max_min, df_std, preprocess=preprocess)
+        df_var = preprocess.flatten(df, 'var', interval, preprocess=preprocess)
+        df_concat = preprocess.concat_df(df_max_min, df_var, preprocess=preprocess)
         df = preprocess.append_truth(df_concat, number, preprocess=preprocess)
 
     return df
