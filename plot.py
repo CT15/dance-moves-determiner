@@ -19,10 +19,8 @@ def plot(df, name='unknown', save=True):
 
 
 if __name__ == "__main__":
-    all_dfs, all_names = data.load(with_names=True)
+    all_dfs, all_names = data.load(with_names=True, preprocess=False)
     
     for index, (df, name) in enumerate(zip(all_dfs, all_names)):
-        #df.drop(columns=['truth'], inplace=True)
-
         plot(df, name=name)
         print(str(index + 1) + ' / ' + str(len(all_dfs)) + ' DONE') 
