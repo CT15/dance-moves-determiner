@@ -37,7 +37,7 @@ def generate_random_forest(train_df, validate_df):
     max_score = -1
     estimator_chosen = -1
 
-    for estimator in range(1, 100):
+    for estimator in range(100, 201):
         clf = RandomForestClassifier(n_estimators=estimator, random_state=2, oob_score=False)
         clf.fit(X_train, y_train)
         y_predict = clf.predict(X_validate)

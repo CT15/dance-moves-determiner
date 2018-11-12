@@ -51,8 +51,8 @@ class MLModel:
 
     def __init__(self):
         PATH_TO_MODEL = sys.path[0] + '/models'
-        self.RF = pickle.load(open(PATH_TO_MODEL + '/random_forest_.sav', 'rb'))
-        self.SVM = pickle.load(open(PATH_TO_MODEL + '/svm.sav', 'rb'))
+        self.RF = pickle.load(open(PATH_TO_MODEL + '/random_forest.sav', 'rb'))
+ #       self.SVM = pickle.load(open(PATH_TO_MODEL + '/svm.sav', 'rb'))
 
     def predict_realtime(self, df):
         df_max_min = flatten(df, interval=len(df))
