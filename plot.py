@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import data
+import train_data
 
 def plot(df, name='unknown', save=True):
     for i in range(12): # 0 - 11
@@ -19,7 +19,7 @@ def plot(df, name='unknown', save=True):
 
 
 if __name__ == "__main__":
-    all_dfs, all_names = data.load(with_names=True, preprocess=False)
+    all_dfs, all_names = train_data.load(with_names=True, preprocess=False)
     
     for index, (df, name) in enumerate(zip(all_dfs, all_names)):
         plot(df, name=name)

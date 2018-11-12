@@ -1,7 +1,7 @@
 import sys
 import pickle
 import pandas as pd
-import data 
+import train_data 
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -69,6 +69,6 @@ def generate_svm(train_df, validate_df):
 
 
 if __name__ == "__main__":
-    train_df, validate_df = split_train_validate(data.load())
+    train_df, validate_df = split_train_validate(train_data.load())
     generate_random_forest(train_df, validate_df)
     generate_svm(train_df, validate_df)        
