@@ -34,3 +34,10 @@
   ```
 4. Run `python plot.py`
 5. Find the graphs in `.png` format in `plots` directory   
+
+## Testing Model
+1. Activate the virtual environment
+2. Resolve all the dependencies
+3. Generate machine learning models
+3. Customise how the models generated are utilised in MLModel class (`test_model/__init__.py` file)
+4. Run `python test.py`
