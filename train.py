@@ -2,9 +2,9 @@ import sys
 import pickle
 import pandas as pd
 import train_data 
-from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+from sklearn.metrics import f1_score
 
 # This method split dfs to train_df and validate_df
 # based on timestamp. The first `train_percent` of all
@@ -36,17 +36,21 @@ def generate_random_forest(train_df, validate_df):
     
     max_score = -1
     estimator_chosen = -1
+    f1_max = 0
 
-    for estimator in range(100, 201):
+    for estimator in range(1, 350, 3):
         clf = RandomForestClassifier(n_estimators=estimator, random_state=2, oob_score=False)
         clf.fit(X_train, y_train)
-        y_predict = clf.predict(X_validate)
-        score = accuracy_score(y_validate, y_predict)
+        train_score = clf.score(X_train, y_train)
+        validate_score = clf.score(X_validate, y_validate)
+        
+        y_pred = clf.predict(X_validate)
+        f1 = f1_score(y_validate, y_pred, average='weighted')
 
-        print("RF: n_estimator = " + str(estimator) + "; accuracy_score = " + str(score))
+        print("RF: n_estimator = " + str(estimator) + "\t\tf1 = " + str(f1) + "\t\ttrain_score =  " + str(train_score) + "\t\tvalidate_score = " + str(validate_score))
 
-        if score > max_score:
-            max_score = score
+        if f1 > f1_max:
+            f1_max = f1
             estimator_chosen = estimator
 
     print("= = = = = = = = = = =")
@@ -59,9 +63,14 @@ def generate_random_forest(train_df, validate_df):
     X_df = pd.concat([X_train, X_validate], axis=0)
     y_df = pd.concat([y_train, y_validate], axis=0)
     clf.fit(X_df, y_df)
-    
+
+    print("final_train_score = " + str(clf.score(X_df, y_df)))
+
+    print("Saving Random Forest model ...")
     with open('./models/random_forest.sav', 'wb') as f:
         pickle.dump(clf, f)
+    print("COMPLETE")    
+
 
 # Generate svm.sav and save it to model folder
 def generate_svm(train_df, validate_df):
