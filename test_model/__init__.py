@@ -41,7 +41,7 @@ class MLModel:
                 'chicken',  # Chicken ==> 3
                 'sideStep', # SideStep ==> 4
                 'turnClap', # TurnClap ==> 5
-                'number6',  # Number6 ==> 6
+                'numbersix',  # Number6 ==> 6
                 'salute',   # Salute ==> 7
                 'mermaid',  # Mermaid ==> 8
                 'swing',    # Swing ==> 9

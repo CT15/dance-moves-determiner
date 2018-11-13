@@ -1,5 +1,11 @@
 # dance-moves-prediction
 
+We aim to predict dance moves using a combination of Random Forest and Support Vector Machine
+to get the best possible accuracy. Train and test data are based on the readings obtained
+from two sensors (GY-521 MPU6050 3-Axis Acceleration Gyroscope 6DOF Module) attached to the 
+dancers wrists. The raw features are Acceleration x, y, z and Rotation x, y, z. There are a
+total of 11 dance moves to be classified.
+
 ## Resolving Dependencies
 1. Create a virtual environment in the directory
   ```shell
