@@ -29,6 +29,21 @@ total of 11 dance moves to be classified.
 ## Plotting Graphs for All Dance Moves
 1. Activate the virtual environment
 2. Resolve all the dependencies
-3. Run `python plot.py`
-4. Find the graphs in `.png` format in `plots` directory
-    
+3. Make sure that the code below is commented out in `train_data.py` 👎
+  ```python
+    ##### COMMENT OUT THE CODE BELOW BEFORE RUNNING plot.py #####
+    df_max_min = prep.flatten(df, interval)
+    df_var = prep.flatten(df, 'var', interval)
+    df_concat = prep.concat_df(df_max_min, df_var)
+    df = prep.append_truth(df_concat, number)
+    #############################################################
+  ```
+4. Run `python plot.py`
+5. Find the graphs in `.png` format in `plots` directory   
+
+## Testing Model
+1. Activate the virtual environment
+2. Resolve all the dependencies
+3. Generate machine learning models
+3. Customise how the models generated are utilised in MLModel class (`test_model/__init__.py` file)
+4. Run `python test.py`
