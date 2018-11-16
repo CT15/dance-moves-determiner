@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import preprocess as prep
+from termcolor import colored
 
 # Wipers ==> 1          # Number6 ==> 6     # Finalm ve ==> 11
 # Number7 ==> 2         # Salute ==> 7
@@ -50,7 +51,7 @@ def load(with_names=False):
     sarah_cowboy1_oct_df = prepare_data('sarah_cowboy1_1min_oct', 10)
     sarah_cowboy2_oct_df = prepare_data('sarah_cowboy2_1min_oct', 10)
     
-    print("Sarah data DONE")
+    print("Sarah data\t", colored("DONE", "green"))
 
     stanley_wipers_df = prepare_data('stanley_wipers_2.5min', 1)
     stanley_number7_df = prepare_data('stanley_number7_2.5min', 2)
@@ -79,7 +80,7 @@ def load(with_names=False):
     stanley_cowboy1_oct_df = prepare_data('stanley_cowboy1_1min_oct', 10)
     stanley_cowboy2_oct_df = prepare_data('stanley_cowboy2_1min_oct', 10)
     
-    print("Stanley data DONE")
+    print("Stanley data\t", colored("DONE", "green"))
 
     azizi_wipers_df = prepare_data('azizi_wipers_2.5min', 1)
     azizi_number7_df = prepare_data('azizi_number7_2.5min', 2)
@@ -108,7 +109,7 @@ def load(with_names=False):
     azizi_cowboy1_oct_df = prepare_data('azizi_cowboy1_1min_oct', 10)
     azizi_cowboy2_oct_df = prepare_data('azizi_cowboy2_1min_oct', 10)
     
-    print("Azizi data DONE")
+    print("Azizi data\t", colored("DONE", "green"))
 
     kaiyan_wipers_df = prepare_data('kaiyan_wipers_2.5min', 1)
     kaiyan_number7_df = prepare_data('kaiyan_number7_2.5min', 2)
@@ -124,7 +125,7 @@ def load(with_names=False):
     kaiyan_cowboy2_df = prepare_data('kaiyan_cowboy2_1min', 10)
     kaiyan_finalmove_df = prepare_data('kaiyan_finalmove_2.5min', 11)
     
-    print("Kai Yan data DONE")
+    print("Kai Yan data\t", colored("DONE", "green"))
 
     calvin_wipers_df = prepare_data('calvin_wipers_2.5min', 1)
     calvin_number7_df = prepare_data('calvin_number7_2.5min', 2)
@@ -153,7 +154,7 @@ def load(with_names=False):
     calvin_cowboy1_oct_df = prepare_data('calvin_cowboy1_1min_oct', 10)
     calvin_cowboy2_oct_df = prepare_data('calvin_cowboy2_1min_oct', 10)
     
-    print("Calvin data DONE")
+    print("Calvin data\t", colored("DONE", "green"))
 
     gary_wipers_oct_df = prepare_data('gary_wipers_3min_oct', 1)
     gary_number7_oct_df = prepare_data('gary_number7_3min_oct', 2)
@@ -182,7 +183,7 @@ def load(with_names=False):
     gary_cowboy2_df = prepare_data('gary_cowboy2_1min', 10)
     gary_finalmove_df = prepare_data('gary_finalmove_2.5min', 11)
     
-    print("Gary data DONE")
+    print("Gary data\t", colored("DONE", "green"))
 
     all_dfs.extend([
         sarah_wipers_df,sarah_number7_df,sarah_chicken_df,sarah_sidestep_df,
