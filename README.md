@@ -25,13 +25,15 @@ total of 11 dance moves to be classified.
 2. Resolve all the dependencies
 3. Run `python train_random_forest.py` to generate Random Forest model
 4. Find the models in `.sav` format in `models` directory
+5. Find the training statistics and evaluation results in `eval_results` directory
 
 To generate SVM model, run `python train_svm.py` at Step 3 instead.
 
 Alternatively, run `./fast_generate_models.sh` at Step 3 to generate both models at the same time.
 
-**Note that each Machine Learning model takes around 1.5 hours to generate owing to the hyperparameter 
-tuning involved. It is advised to run the model training from a detached session of a terminal multiplexer.**
+**Note that if you run this without GPU, each Machine Learning model takes around 1.5 hours to generate owing 
+to the hyperparameter tuning involved. As such, it is advised to run the model training from a detached session 
+of a terminal multiplexer.**
 
 ## Plotting Graphs for All Dance Moves
 1. Activate the virtual environment
@@ -46,7 +48,9 @@ tuning involved. It is advised to run the model training from a detached session
     #############################################################
   ```
 4. Run `python plot.py`
-5. Find the graphs in `.png` format in `plots` directory   
+5. Find the graphs in `.png` format in `plots` directory
+
+For some reason, adding an additional parameter in the dode to skip Step 3 makes the code runs 999999999x slower. 😓
 
 ## Testing Final Model
 1. Activate the virtual environment

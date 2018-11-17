@@ -1,4 +1,4 @@
-import sys
+import os
 import pickle
 import time
 import pandas as pd
@@ -13,6 +13,8 @@ from evaluate import evaluate
 
 # Generate random_forest.sav and save it to model folder
 def generate_random_forest(train_df, test_df):
+    file = open('./eval_results/random_forest_train_stats.txt', 'w+')
+
     sample_rf = RandomForestClassifier(random_state=40)
 
     print(colored("[RF]", "green"), " List of parameters:")
@@ -47,8 +49,13 @@ def generate_random_forest(train_df, test_df):
                    'bootstrap': bootstrap}
     
     print(colored("[RF]", "green"), " Random grid created:")
+    file.write("Random Grid for Random Search:\n")
     for key in random_grid.keys():
-        print("\t- " + key + ":\t" + str(random_grid[key]))
+        to_print = "\t- " + key + ":\t" + str(random_grid[key])
+        print(to_print)
+        file.write(to_print + "\n")
+
+    file.write("\n")
 
     print(colored("[RF]", "green"),  " Instatiating Random Search ...")
 
@@ -66,12 +73,20 @@ def generate_random_forest(train_df, test_df):
     start_time = time.time()
     
     print(colored("[RF]", "green"), " Random Search fitting DONE with best hyperparameters:")
+    file.write("Best hyperparameters from Random Search:\n")
+
     bp = clf_random.best_params_
     for key in bp.keys():
-        print("\t- " + key + ":\t" + str(bp[key]))
+        to_print = "\t- " + key + ":\t" + str(bp[key])
+        print(to_print)
+        file.write(to_print + "\n")
 
-    print(colored("[RF]", "green"), "Time stopped ... Total time = " + str(time.time() - start_time))
-    
+    file.write("\n")
+
+    time_taken = time.time() - start_time
+    print(colored("[RF]", "green"), "Time stopped ... Total time = " + str(time_taken))
+    file.write("Time taken: " + str(time_taken) + "\n\n")
+
     print(colored("[RF]", "green"), " Initializing base model ...")
     base_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 
                                         min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'], 
@@ -79,7 +94,8 @@ def generate_random_forest(train_df, test_df):
     base_model.fit(X_train, y_train)
 
     print(colored("[RF]", "green"), " Evaluating base model ...")
-    base_score = evaluate(base_model, X_train, y_train, X_test, y_test)
+    base_score = evaluate(base_model, X_train, y_train, X_test, y_test, 'RF')
+    file.write("Base model evaluation: [refer to random_forest_eval.txt (top)]\n\n")
 
     print(colored("[RF]", "green"), " Creating parameter grid for grid search ...")
     
@@ -103,6 +119,15 @@ def generate_random_forest(train_df, test_df):
                   'min_samples_leaf': min_samples_leaf,
                   'bootstrap': bootstrap}
 
+    print(colored("[RF]", "green"), " Random grid created:")
+    file.write("Random Grid for Grid Search:\n")
+    for key in param_grid.keys():
+        to_print = "\t- " + key + ":\t" + str(param_grid[key])
+        print(to_print)
+        file.write(to_print + "\n")
+
+    file.write("\n")
+
     # Base model to tune
     clf = RandomForestClassifier()
 
@@ -115,11 +140,18 @@ def generate_random_forest(train_df, test_df):
     start_time = time.time()
     
     print(colored("[RF]", "green"), " Grid Search fitting DONE with best hyperparameters:")
+    file.write("Best hyperparameters from Grid Search:\n")
     bp = clf_grid.best_params_
     for key in bp.keys():
-        print("\t- " + key + ":\t" + str(bp[key]))
+        to_print = "\t- " + key + ":\t" + str(bp[key])
+        print(to_print)
+        file.write(to_print + "\n")
 
-    print(colored("[RF]", "green"), "Time stopped ... Total time = " + str(time.time() - start_time))
+    file.write("\n")
+
+    time_taken = time.time() - start_time
+    print(colored("[RF]", "green"), "Time stopped ... Total time = " + str(time_taken))
+    file.write("Time taken: " + str(time_taken) + "\n\n")
     
     print(colored("[RF]", "green"), " Initializing best grid model ...")
     grid_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 
@@ -129,17 +161,23 @@ def generate_random_forest(train_df, test_df):
     grid_model.fit(X_train, y_train)
 
     print(colored("[RF]", "green"), " Evaluating grid model ...")
-    grid_score = evaluate(grid_model, X_train, y_train, X_test, y_test)
+    grid_score = evaluate(grid_model, X_train, y_train, X_test, y_test, 'RF')
+    file.write("Fine tuned model evaluation: [refer to random_forest_eval.txt (bottom)]\n\n")
 
     improvement = 100 * (grid_score - base_score) / base_score
 
     print(colored("[RF]", "green"), " Improvement of " + str(improvement) + "% from the base model")
+    file.write("Improvement of " + str(improvement) + "% from the base model\n\n")
 
     if improvement <= 0:
-        print(colored("[RF]", "green"), " Base model is used")
+        to_print = "Base model is used"
+        print(colored("[RF]", "green"), " " + to_print)
+        file.write(to_print + "\n")
         clf = base_model
     else:
-        print(colored("[RF]", "green"), " Grid model is used")
+        to_print = "Grid model is used"
+        print(colored("[RF]", "green"), " " + to_print)
+        file.write(to_print + "\n")
         clf = grid_model
 
     print(colored("[RF]", "green"), " Saving Random Forest model ...")
@@ -148,9 +186,17 @@ def generate_random_forest(train_df, test_df):
         pickle.dump(clf, f)
     
     print(colored("[RF]", "green"), " Random Forest model saved")  
+
+    file.close()
     
 
 if __name__ == "__main__":
+    # Housekeeping
+    try:
+        os.remove('./eval_results/random_forest_eval.txt')
+    except OSError:
+        pass
+
     train_df, test_df = prep.split_train_test(train_data.load())
     print(colored("[CHECK]", "magenta"), " Total train data:\t" + str(len(train_df)))
     print(colored("[CHECK]", "magenta"), " Total test data:\t" + str(len(test_df)))
