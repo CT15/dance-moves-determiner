@@ -46,7 +46,7 @@ def generate_random_forest(train_df, test_df):
                    'min_samples_split': min_samples_split,
                    'min_samples_leaf': min_samples_leaf,
                    'bootstrap': bootstrap}
-    
+
     print(colored("[RF]", "green"), " Random grid created:")
     file.write("Random Grid for Random Search:\n")
     for key in random_grid.keys():
@@ -61,13 +61,13 @@ def generate_random_forest(train_df, test_df):
     # Base model to tune
     clf = RandomForestClassifier()
     clf_random = RandomizedSearchCV(estimator=clf, param_distributions=random_grid, n_iter=100, cv=3, verbose=2, random_state=37, n_jobs=-1)
-    
+
     X_train, y_train = prep.get_X_y(train_df)
     X_test, y_test = prep.get_X_y(test_df)
-    
+
     print(colored("[RF]", "green"), " Start Random Search fitting ...")
     clf_random.fit(X_train, y_train)
-    
+
     print(colored("[RF]", "green"), " Random Search fitting DONE with best hyperparameters:")
     file.write("Best hyperparameters from Random Search:\n")
 
@@ -80,8 +80,8 @@ def generate_random_forest(train_df, test_df):
     file.write("\n")
 
     print(colored("[RF]", "green"), " Initializing base model ...")
-    base_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 
-                                        min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'], 
+    base_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'],
+                                        min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'],
                                         max_depth=bp['max_depth'], bootstrap=bp['bootstrap'])
     base_model.fit(X_train, y_train)
 
@@ -90,7 +90,7 @@ def generate_random_forest(train_df, test_df):
     file.write("Base model evaluation: [refer to random_forest_eval1.txt]\n\n")
 
     print(colored("[RF]", "green"), " Creating parameter grid for grid search ...")
-    
+
     # Number of trees in random forest
     n_estimators = [bp['n_estimators']-50, bp['n_estimators']+50, bp['n_estimators']+100, bp['n_estimators']+150]
     # Number of features to consider at every split
@@ -127,7 +127,7 @@ def generate_random_forest(train_df, test_df):
 
     print(colored("[RF]", "green"), " Start Grid Search fitting ...")
     clf_grid.fit(X_train, y_train)
-    
+
     print(colored("[RF]", "green"), " Grid Search fitting DONE with best hyperparameters:")
     file.write("Best hyperparameters from Grid Search:\n")
     bp = clf_grid.best_params_
@@ -137,12 +137,12 @@ def generate_random_forest(train_df, test_df):
         file.write(to_print + "\n")
 
     file.write("\n")
-    
+
     print(colored("[RF]", "green"), " Initializing best grid model ...")
-    grid_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 
-                                        min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'], 
+    grid_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'],
+                                        min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'],
                                         max_depth=bp['max_depth'], bootstrap=bp['bootstrap'])
-    
+
     grid_model.fit(X_train, y_train)
 
     print(colored("[RF]", "green"), " Evaluating grid model ...")
@@ -169,19 +169,13 @@ def generate_random_forest(train_df, test_df):
     
     with open('./models/random_forest.sav', 'wb') as f:
         pickle.dump(clf, f)
-    
-    print(colored("[RF]", "green"), " Random Forest model saved")  
+
+    print(colored("[RF]", "green"), " Random Forest model saved")
 
     file.close()
-    
+
 
 if __name__ == "__main__":
-    # Housekeeping
-    try:
-        os.remove('./eval_results/random_forest_eval.txt')
-    except OSError:
-        pass
-
     train_df, test_df = prep.split_train_test(train_data.load())
     print(colored("[CHECK]", "magenta"), " Total train data:\t" + str(len(train_df)))
     print(colored("[CHECK]", "magenta"), " Total test data:\t" + str(len(test_df)))

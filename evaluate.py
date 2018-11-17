@@ -13,7 +13,7 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id, index=1):
     f1 = f1_score(y_test, y_pred, average='weighted')
 
     print(colored("[EVAL]", "blue"), " f1 = " + str(f1) + "\t\ttrain_score =  " + str(train_score) + "\t\ttest_score = " + str(test_score))
-    
+
     print(colored("[EVAL]", "blue"), " Generating confusion matrix ...")
 
     cm_df = pd.DataFrame(confusion_matrix(y_test, y_pred))
@@ -28,11 +28,13 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id, index=1):
 
     with open(figure_path, 'wb') as f:
         figure.savefig(f, dpi=600)
-   
-    file = open(file_path, 'a+')
+
+    file = open(file_path, 'w+')
     file.write("f1:\t" + str(f1) + "\ntrain_score:\t" + str(train_score) + "\ntest_score:\t" + str(test_score) + "\n")
     png_name = 'svm_conf' + str(index) + '.png' if model_id == 'SVM' else 'random_forest_conf' + str(index) + '.png'
     file.write("Confusion Matrix: [refer to " + png_name + "]\n")
     file.close()
+
+    plt.clf()
 
     return test_score
