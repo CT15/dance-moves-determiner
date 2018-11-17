@@ -32,7 +32,7 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id):
     file = open(file_path, 'a+')
     file.write("f1:\t" + str(f1) + "\ntrain_score:\t" + str(train_score) + "\ntest_score:\t" + str(test_score) + "\n")
     file.write("Confusion Matrix:\n")
-    file.write(cm)
+    file.write(cm_df)
     file.write("\n------------------------------ END\n")
     file.close()
 
