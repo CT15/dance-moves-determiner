@@ -86,7 +86,7 @@ def generate_random_forest(train_df, test_df):
     base_model.fit(X_train, y_train)
 
     print(colored("[RF]", "green"), " Evaluating base model ...")
-    base_score = evaluate(base_model, X_train, y_train, X_test, y_test, 'RF')
+    base_score = evaluate(base_model, X_train, y_train, X_test, y_test, 'RF', 1)
     file.write("Base model evaluation: [refer to random_forest_eval.txt (top)]\n\n")
 
     print(colored("[RF]", "green"), " Creating parameter grid for grid search ...")
@@ -146,7 +146,7 @@ def generate_random_forest(train_df, test_df):
     grid_model.fit(X_train, y_train)
 
     print(colored("[RF]", "green"), " Evaluating grid model ...")
-    grid_score = evaluate(grid_model, X_train, y_train, X_test, y_test, 'RF')
+    grid_score = evaluate(grid_model, X_train, y_train, X_test, y_test, 'RF', 2)
     file.write("Fine tuned model evaluation: [refer to random_forest_eval.txt (bottom)]\n\n")
 
     improvement = 100 * (grid_score - base_score) / base_score
