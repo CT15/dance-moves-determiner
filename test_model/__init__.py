@@ -52,7 +52,7 @@ class MLModel:
     def __init__(self):
         PATH_TO_MODEL = sys.path[0] + '/models'
         self.RF = pickle.load(open(PATH_TO_MODEL + '/random_forest.sav', 'rb'))
- #       self.SVM = pickle.load(open(PATH_TO_MODEL + '/svm.sav', 'rb'))
+        # self.SVM = pickle.load(open(PATH_TO_MODEL + '/svm.sav', 'rb'))
     
 
     # This method is called when dance moves are required to be
@@ -64,17 +64,9 @@ class MLModel:
         df_concat = concat_df(df_max_min, df_std)
 
         predicted_RF = self.RF.predict(df_concat)
-        predicted_SVM = self.SVM.predict(df_concat)
+        # predicted_SVM = self.SVM.predict(df_concat)
 
-        if predicted_RF != predicted_SVM:
-            return self.DANCES[0]
+        # if predicted_RF != predicted_SVM:
+            # return None
 
         return self.DANCES[predicted_RF[0]]
-
-
-    # This method is called when dance moves are predicted
-    # from .csv files. The dance label returned is in the
-    # form of numerical value (not the actual dance move)
-    # because further processing is expected.
-    def predict(self, df):
-        return self.RF.predict(df)
