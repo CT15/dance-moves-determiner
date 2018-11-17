@@ -121,7 +121,8 @@ def generate_random_forest(train_df, test_df):
     base_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 
                                         min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'], 
                                         max_depth=bp['max_depth'], bootstrap=bp['bootstrap'])
-    
+    base_model.fit(X_train, y_train)
+
     print(colored("[RF]", "green"), " Evaluating base model ...")
     base_score = evaluate(base_model, X_train, y_train, X_test, y_test)
 
@@ -170,6 +171,8 @@ def generate_random_forest(train_df, test_df):
                                         min_samples_leaf=bp['min_samples_leaf'], max_features=bp['max_features'], 
                                         max_depth=bp['max_depth'], bootstrap=bp['bootstrap'])
     
+    grid_model.fit(X_train, y_train)
+
     print(colored("[RF]", "green"), " Evaluating grid model ...")
     grid_score = evaluate(grid_model, X_train, y_train, X_test, y_test)
 

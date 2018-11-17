@@ -39,9 +39,9 @@ class MLModel:
                 'wipers',   # Wipers ==> 1
                 'number7',  # Number7 ==> 2
                 'chicken',  # Chicken ==> 3
-                'sideStep', # SideStep ==> 4
-                'turnClap', # TurnClap ==> 5
-                'numbersix',  # Number6 ==> 6
+                'sidestep', # SideStep ==> 4
+                'turnclap', # TurnClap ==> 5
+                'numbersix',# Number6 ==> 6
                 'salute',   # Salute ==> 7
                 'mermaid',  # Mermaid ==> 8
                 'swing',    # Swing ==> 9
@@ -53,7 +53,10 @@ class MLModel:
         PATH_TO_MODEL = sys.path[0] + '/models'
         self.RF = pickle.load(open(PATH_TO_MODEL + '/random_forest.sav', 'rb'))
  #       self.SVM = pickle.load(open(PATH_TO_MODEL + '/svm.sav', 'rb'))
+    
 
+    # This method is called when dance moves are required to be
+    # predicted in real time.
     def predict_realtime(self, df):
         df_max_min = flatten(df, interval=len(df))
         df_std = flatten(df, 'std', interval=len(df))
@@ -67,5 +70,7 @@ class MLModel:
 
         return self.DANCES[predicted_RF[0]]
 
+    # This method is called when dance moves are predicted
+    # from .csv files
     def predict(self, df):
         return self.RF.predict(df)
