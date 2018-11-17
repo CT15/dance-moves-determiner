@@ -20,7 +20,7 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id, index=1):
     print(cm_df)
 
     cm_df = cm_df[cm_df.columns].astype(int)
-    hm = sn.heatmap(cm_df, annot=True)
+    hm = sn.heatmap(cm_df, annot=True, cmap='Blues', fmt='g')
     figure = hm.get_figure()
 
     figure_path = './eval_results/svm_conf' + str(index) + '.png' if model_id == 'SVM' else './eval_results/random_forest_conf' + str(index) + '.png'
@@ -33,7 +33,6 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id, index=1):
     file.write("f1:\t" + str(f1) + "\ntrain_score:\t" + str(train_score) + "\ntest_score:\t" + str(test_score) + "\n")
     png_name = 'svm_conf' + str(index) + '.png' if model_id == 'SVM' else 'random_forest_conf' + str(index) + '.png'
     file.write("Confusion Matrix: [refer to " + png_name + "]\n")
-    file.write("\n------------------------------ END\n")
     file.close()
 
     return test_score
