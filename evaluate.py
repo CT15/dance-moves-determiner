@@ -19,7 +19,7 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id):
     cm = confusion_matrix(y_test, y_pred)
     print(pd.DataFrame(cm))
 
-    df_cm = pd.DataFrame(confusion_matrix, index=[i for i in range(11)+1], columns=[i for i in range(11)+1])
+    df_cm = pd.DataFrame(confusion_matrix, index=[i for i in range(11)], columns=[i for i in range(11)])
     hm = sn.heatmap(df_cm, annot=True, annot_kws={"size": 16})
     figure = hm.get_figure()
 

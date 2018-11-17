@@ -36,17 +36,17 @@ def concat_df(df1, df2):
 
 class MLModel:
     DANCES = [
-                'wipers',   # Wipers ==> 1
-                'number7',  # Number7 ==> 2
-                'chicken',  # Chicken ==> 3
-                'sidestep', # SideStep ==> 4
-                'turnclap', # TurnClap ==> 5
-                'numbersix',# Number6 ==> 6
-                'salute',   # Salute ==> 7
-                'mermaid',  # Mermaid ==> 8
-                'swing',    # Swing ==> 9
-                'cowboy',   # Cowboy ==> 10
-                'logout',   # FinalMove ==> 11
+                'wipers',   # Wipers ==> 0
+                'number7',  # Number7 ==> 1
+                'chicken',  # Chicken ==> 2
+                'sidestep', # SideStep ==> 3
+                'turnclap', # TurnClap ==> 4
+                'numbersix',# Number6 ==> 5
+                'salute',   # Salute ==> 6
+                'mermaid',  # Mermaid ==> 7
+                'swing',    # Swing ==> 8
+                'cowboy',   # Cowboy ==> 9
+                'logout',   # FinalMove ==> 10
     ]
 
     def __init__(self):
