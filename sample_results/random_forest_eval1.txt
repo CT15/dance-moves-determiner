@@ -4,3 +4,11 @@ test_score:	0.9574468085106383
 Confusion Matrix: [refer to random_forest_conf1.png]
 
 ------------------------------ END
+f1:	0.9574098285802614
+train_score:	0.9859539602028873
+test_score:	0.9574468085106383
+Confusion Matrix: [refer to random_forest_conf1.png]
+f1:	0.9547416052470539
+train_score:	0.986604239823124
+test_score:	0.9547190398254228
+Confusion Matrix: [refer to random_forest_conf1.png]
