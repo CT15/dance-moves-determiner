@@ -1,0 +1,6 @@
+f1:	0.9711106849787379
+train_score:	0.9972688255950058
+test_score:	0.9710856519367158
+Confusion Matrix: [refer to random_forest_conf2.png]
+
+------------------------------ END
