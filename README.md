@@ -31,6 +31,8 @@ To generate SVM model, run `python train_svm.py` at Step 3 instead.
 
 Alternatively, run `./fast_generate_models.sh` at Step 3 to generate both models at the same time.
 
+See sample evaluation results [here](https://github.com/CT15/dance-moves-prediction/tree/master/sample_results/eval_results)
+
 **Note that if you run this without GPU, each Machine Learning model takes around 1.5 hours to generate owing 
 to the hyperparameter tuning involved. As such, you may want to train the models from a detached session 
 of a terminal multiplexer.**
@@ -50,7 +52,9 @@ of a terminal multiplexer.**
 4. Run `python plot.py`
 5. Find the graphs in `.png` format in `plots` directory
 
-For some reason, adding an additional parameter in the dode to skip Step 3 makes the code runs 999999999x slower. 😓
+For some reason, adding an additional parameter in the dode to skip Step 3 makes the code runs 99999x slower. 😓
+
+See sample plots [here](https://github.com/CT15/dance-moves-prediction/tree/master/sample_results/plots)
 
 ## Testing Final Model
 1. Activate the virtual environment
