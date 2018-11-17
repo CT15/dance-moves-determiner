@@ -1,6 +1,5 @@
 import os
 import pickle
-import time
 import pandas as pd
 import numpy as np
 import train_data
@@ -69,10 +68,6 @@ def generate_random_forest(train_df, test_df):
     print(colored("[RF]", "green"), " Start Random Search fitting ...")
     clf_random.fit(X_train, y_train)
     
-    print(colored("[RF]", "green"), " Time started ...")
-    start_time = time.time()
-    file.write("Start Random Search fitting. Time: " + str(start_time) + "\n\n")
-    
     print(colored("[RF]", "green"), " Random Search fitting DONE with best hyperparameters:")
     file.write("Best hyperparameters from Random Search:\n")
 
@@ -83,11 +78,6 @@ def generate_random_forest(train_df, test_df):
         file.write(to_print + "\n")
 
     file.write("\n")
-    
-    end_time = time.time()
-    time_taken = start_time - end_time
-    print(colored("[RF]", "green"), "Time stopped ... Total time = " + str(time_taken))
-    file.write("Time: " + str(end_time) + "\n------------------------------\nTime taken: " + str(time_taken) + "\n\n")
 
     print(colored("[RF]", "green"), " Initializing base model ...")
     base_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 
@@ -138,10 +128,6 @@ def generate_random_forest(train_df, test_df):
     print(colored("[RF]", "green"), " Start Grid Search fitting ...")
     clf_grid.fit(X_train, y_train)
     
-    print(colored("[RF]", "green"), " Time started ...")
-    start_time = time.time()
-    file.write("Start Grid Search fitting. Time: " + str(start_time) + "\n\n")
-    
     print(colored("[RF]", "green"), " Grid Search fitting DONE with best hyperparameters:")
     file.write("Best hyperparameters from Grid Search:\n")
     bp = clf_grid.best_params_
@@ -151,11 +137,6 @@ def generate_random_forest(train_df, test_df):
         file.write(to_print + "\n")
 
     file.write("\n")
-    
-    end_time = time.time()
-    time_taken = end_time - start_time
-    print(colored("[RF]", "green"), "Time stopped ... Total time = " + str(time_taken))
-    file.write("Time: " + str(end_time) + "\n------------------------------\nTime taken: " + str(time_taken) + "\n\n")
     
     print(colored("[RF]", "green"), " Initializing best grid model ...")
     grid_model = RandomForestClassifier(n_estimators=bp['n_estimators'], min_samples_split=bp['min_samples_split'], 

@@ -16,11 +16,11 @@ def evaluate(model, X_train, y_train, X_test, y_test, model_id):
     
     print(colored("[EVAL]", "blue"), " Generating confusion matrix ...")
 
-    cm = confusion_matrix(y_test, y_pred)
-    print(pd.DataFrame(cm))
+    cm_df = pd.DataFrame(confusion_matrix(y_test, y_pred))
+    print(cm_df)
 
-    df_cm = pd.DataFrame(confusion_matrix, index=[i for i in range(11)], columns=[i for i in range(11)])
-    hm = sn.heatmap(df_cm, annot=True, annot_kws={"size": 16})
+    cm_df = cm_df[cm_df.columns].astype(int)
+    hm = sn.heatmap(cm_df, annot=True, annot_kws={"size": 16})
     figure = hm.get_figure()
 
     figure_path = './eval_results/svm_conf.png' if model_id == 'SVM' else './eval_results/random_forest_conf.png'
