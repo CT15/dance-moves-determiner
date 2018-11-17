@@ -60,11 +60,11 @@ def evaluate(model, X_train, y_train, X_test, y_test):
 def generate_random_forest(train_df, test_df):
     sample_rf = RandomForestClassifier(random_state=40)
 
-    print(colored("[RF]", "green"), " List of parameters ---")
+    print(colored("[RF]", "green"), " List of parameters:")
     for key in sample_rf.get_params().keys():
         print("\t- " + str(key))
 
-    print(colored("[RF]", "green"), " Hyperparameters to tune ---")
+    print(colored("[RF]", "green"), " Hyperparameters to tune:")
     for hyperparam in ['n_estimator', 'max_features', 'max_depth', 'min_samples_split', 'min_samples_leaf', 'bootstrap']:
         print("\t- " + hyperparam)
 
@@ -91,7 +91,7 @@ def generate_random_forest(train_df, test_df):
                    'min_samples_leaf': min_samples_leaf,
                    'bootstrap': bootstrap}
     
-    print(colored("[RF]", "green"), " Random grid created ---")
+    print(colored("[RF]", "green"), " Random grid created:")
     for key in random_grid.keys():
         print("\t- " + key + ":\t" + str(random_grid[key]))
 
@@ -110,7 +110,7 @@ def generate_random_forest(train_df, test_df):
     print(colored("[RF]", "green"), " Time started ...")
     start_time = time.time()
     
-    print(colored("[RF]", "green"), " Random Search fitting DONE with best hyperparameters --->")
+    print(colored("[RF]", "green"), " Random Search fitting DONE with best hyperparameters:")
     bp = clf_random.best_params_
     for key in bp.keys():
         print("\t- " + key + ":\t" + str(bp[key]))
@@ -158,7 +158,7 @@ def generate_random_forest(train_df, test_df):
     print(colored("[RF]", "green"), " Time started ...")
     start_time = time.time()
     
-    print(colored("[RF]", "green"), " Grid Search fitting DONE with best hyperparameters --->")
+    print(colored("[RF]", "green"), " Grid Search fitting DONE with best hyperparameters:")
     bp = clf_grid.best_params_
     for key in bp.keys():
         print("\t- " + key + ":\t" + str(bp[key]))
@@ -184,12 +184,12 @@ def generate_random_forest(train_df, test_df):
         print(colored("[RF]", "green"), " Grid model is used")
         clf = grid_model
 
-    print(colored("[RF]", "green"), " Saving Random Forest model ...", end=" ")
+    print(colored("[RF]", "green"), " Saving Random Forest model ...")
     
     with open('./models/random_forest.sav', 'wb') as f:
         pickle.dump(clf, f)
     
-    print(colored("DONE"), "green")  
+    print(colored("[RF]", "green"), " Random Forest model saved")  
     
     # print("Start choosing n_estimator for random forest")
     
@@ -231,3 +231,4 @@ if __name__ == "__main__":
     print(colored("[CHECK]", "magenta"), " Total train data:\t" + str(len(train_df)))
     print(colored("[CHECK]", "magenta"), " Total test data:\t" + str(len(test_df)))
     generate_random_forest(train_df, test_df)
+    print(colored("[END]", "green"), " Random Forest training completed")
