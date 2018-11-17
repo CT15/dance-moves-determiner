@@ -58,7 +58,7 @@ class MLModel:
     # This method is called when dance moves are required to be
     # predicted in real time. Return one dance label in the form
     # of the actual dance move.
-    def predict_realtime(self, df):
+    def predict(self, df):
         df_max_min = flatten(df, interval=len(df))
         df_std = flatten(df, 'std', interval=len(df))
         df_concat = concat_df(df_max_min, df_std)
