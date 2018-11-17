@@ -41,11 +41,13 @@ def evaluate(model, X_train, y_train, X_test, y_test):
     y_pred = model.predict(X_test)
     f1 = f1_score(y_test, y_pred, average='weighted')
 
-    print(colored("[EVAL]", "blue"), " n_estimator = " + str(estimator) + "\t\tf1 = " + str(f1) + "\t\ttrain_score =  " + str(train_score) + "\t\ttest_score = " + str(test_score))
+    print(colored("[EVAL]", "blue"), " f1 = " + str(f1) + "\t\ttrain_score =  " + str(train_score) + "\t\ttest_score = " + str(test_score))
     
-    print(colored("[EVAL]", "blue"), " Showing confusion matrix ...")
+    print(colored("[EVAL]", "blue"), " Generating confusion matrix ...")
 
     confusion_matrix = confusion_matrix(y_test, y_pred)
+    print(pd.DataFrame(confusion_matrix))
+
     df_cm = pd.DataFrame(confusion_matrix, index=[i for i in range(11)+1], columns=[i for i in range(11)+1])
     plt.figure(figsize=(10,7))
     sn.set(font_scale=1.4)
@@ -224,11 +226,8 @@ def generate_random_forest(train_df, test_df):
     # print("final_train_score = " + str(clf.score(X_df, y_df)))
 
 
-# Generate svm.sav and save it to model folder
-def generate_svm(train_df, test_df):
-    pass
-
-
 if __name__ == "__main__":
     train_df, test_df = split_train_test(train_data.load())
+    print(colored("[CHECK]", "magenta"), " Total train data:\t" + str(len(train_df)))
+    print(colored("[CHECK]", "magenta"), " Total test data:\t" + str(len(test_df)))
     generate_random_forest(train_df, test_df)
