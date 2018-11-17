@@ -1,27 +1,25 @@
 import test_data
 import pandas as pd
+import preprocess as prep
 from test_model import MLModel
 from sklearn.metrics import accuracy_score
-
-# This method combines all the dfs in the list
-# and split the combined df to features df and
-# truths df
-def split_features_truths(dfs):
-    features_df = pd.DataFrame()
-    truths_df = pd.DataFrame()
-    for df in dfs:
-        features_df = features_df.append(df.loc[:, df.columns != 'truth'])
-        truths_df = truths_df.append(df.loc[:, df.columns == 'truth'])
-
-    return (features_df, truths_df)
+from termcolor import colored
+from sklearn.metrics import f1_score, confusion_matrix
 
 if __name__ == "__main__":
-    features_df, truths_df = split_features_truths(test_data.load())
+    _, test_df = prep.split_train_test(test_data.load(), train_percent=0)
+    X_test, y_test = prep.get_X_y(test_df)
     
     model = MLModel()
-    predicted_df = model.predict(features_df)
+    
+    y_pred = model.test_predict(X_test)
+    print(y_pred)
+    print(y_test)
+    test_score = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average='weighted')
 
-    print("Accuracy score -----")
-    print(accuracy_score(truths_df, predicted_df))
-    print("--------------------")
+    print(colored("[EVAL]", "blue"), " f1 = " + str(f1) + "\t\ttest_score = " + str(test_score))
+    print(colored("[EVAL]", "blue"), " Generating confusion matrix ...")
 
+    cm_df = pd.DataFrame(confusion_matrix(y_test, y_pred))
+    print(cm_df)

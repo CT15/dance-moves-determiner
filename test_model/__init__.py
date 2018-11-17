@@ -70,3 +70,9 @@ class MLModel:
             # return None
 
         return self.DANCES[predicted_RF[0]]
+
+    
+    # This method is used only in test.py where real-time prediction
+    # is not required.
+    def test_predict(self, df):
+        return self.RF.predict(df)
