@@ -1,0 +1,16 @@
+Random Grid for Random Search:
+	- n_estimators:	[100, 311, 522, 733, 944, 1155, 1366, 1577, 1788, 2000]
+	- max_features:	['auto', 'log2', None]
+	- max_depth:	[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, None]
+	- min_samples_split:	[2, 5, 10]
+	- min_samples_leaf:	[1, 2, 4]
+	- bootstrap:	[True, False]
+
+Best hyperparameters from Random Search:
+	- n_estimators:	733
+	- min_samples_split:	10
+	- min_samples_leaf:	4
+	- max_features:	auto
+	- max_depth:	10
+	- bootstrap:	True
+
