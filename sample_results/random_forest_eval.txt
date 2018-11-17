@@ -1,4 +1,0 @@
-f1:	0.9578982605306123
-train_score:	0.9846534009624138
-test_score:	0.9579923622476814
-Confusion Matrix:
