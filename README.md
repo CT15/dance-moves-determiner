@@ -32,7 +32,7 @@ To generate SVM model, run `python train_svm.py` at Step 3 instead.
 Alternatively, run `./fast_generate_models.sh` at Step 3 to generate both models at the same time.
 
 **Note that if you run this without GPU, each Machine Learning model takes around 1.5 hours to generate owing 
-to the hyperparameter tuning involved. As such, it is advised to run the model training from a detached session 
+to the hyperparameter tuning involved. As such, you may want to train the models from a detached session 
 of a terminal multiplexer.**
 
 ## Plotting Graphs for All Dance Moves
