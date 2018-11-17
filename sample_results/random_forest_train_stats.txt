@@ -7,8 +7,8 @@ Random Grid for Random Search:
 	- bootstrap:	[True, False]
 
 Best hyperparameters from Random Search:
-	- n_estimators:	311
-	- min_samples_split:	2
+	- n_estimators:	522
+	- min_samples_split:	5
 	- min_samples_leaf:	2
 	- max_features:	log2
 	- max_depth:	10
@@ -17,10 +17,10 @@ Best hyperparameters from Random Search:
 Base model evaluation: [refer to random_forest_eval1.txt]
 
 Random Grid for Grid Search:
-	- n_estimators:	[261, 361, 411, 461]
+	- n_estimators:	[472, 572, 622, 672]
 	- max_features:	['log2']
 	- max_depth:	[20, 30, 40, 50]
-	- min_samples_split:	[4, 6, 8]
+	- min_samples_split:	[3, 7, 9]
 	- min_samples_leaf:	[1, 3, 4]
 	- bootstrap:	[True]
 
@@ -28,12 +28,12 @@ Best hyperparameters from Grid Search:
 	- bootstrap:	True
 	- max_depth:	20
 	- max_features:	log2
-	- min_samples_leaf:	4
-	- min_samples_split:	6
-	- n_estimators:	261
+	- min_samples_leaf:	1
+	- min_samples_split:	3
+	- n_estimators:	472
 
 Fine tuned model evaluation: [refer to random_forest_eval2.txt]
 
-Improvement of 1.4857142857142878% from the base model
+Improvement of 1.708428246013669% from the base model
 
 Grid model is used
