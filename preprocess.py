@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split, KFold
 
 # Return a flattened df of the specified feature (either 'max_min' or 'var')
-def flatten(df, feature='max_min', interval=80):
+def flatten(df, feature='max_min', interval=60):
     result_df = pd.DataFrame()
 
     startIndex = 0

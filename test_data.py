@@ -7,7 +7,7 @@ import preprocess as prep
 # Chicken ==> 2         # Mermain ==> 7
 # SideStep ==> 3        # Swing ==> 8
 # TurnClap ==> 4        # Cowboy ==> 9
-def prepare_data(csv_name, number, interval=76):
+def prepare_data(csv_name, number, interval=60):
     df = pd.read_csv(sys.path[0] + '/train_data/' + csv_name + '.csv', header=None)
 #    df = preprocess.normalise(df)
     df_max_min = prep.flatten(df, interval)
