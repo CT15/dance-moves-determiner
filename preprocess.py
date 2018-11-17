@@ -41,31 +41,22 @@ def concat_df(df1, df2):
 
     return df
 
-def separate_test_train(dfs, test_size=0.2):
+# This method split dfs to train_df and test_df
+# based on timestamp. The first `train_percent` of all
+# the input dfs will be grouped into train_df. The rest
+# are grouped into test_df.
+def split_train_test(dfs, train_percent=0.8):
     train_df = pd.DataFrame()
     test_df = pd.DataFrame()
 
     for df in dfs:
-        y = df['truth']
-        X = df[df.columns[df.columns != 'truth']].copy()
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=4)
-
-        train = pd.concat([X_train, y_train], axis=1)
-        test = pd.concat([X_test, y_test], axis=1)
-
-        train_df = train_df.append(train)
-        test_df = test_df.append(test)
-
-    # Shuffle rows
-    train_df = train_df.sample(frac=1).reset_index(drop=True)
-    test_df = test_df.sample(frac=1).reset_index(drop=True)
-
+        train_len = round(len(df) * train_percent)
+        train_df = train_df.append(df.loc[0:train_len, :])
+        test_df = test_df.append(df.loc[train_len:len(df), :])
+    
     return (train_df, test_df)
 
-# for train_index, test_index in kf.split(data_df):
-#     print("TRAIN:", train_index, "TEST:", test_index)
-#     X_train, X_test = data_df.iloc[train_index], data_df.iloc[test_index]
-#     y_train, y_test = truth_df[train_index], truth_df.iloc[test_index]
-def k_fold(df, fold_no=2):
-    kf = KFold(n_splits=fold_no, random_state=2, shuffle=False)
-    return kf.split(df)
+def get_X_y(df):
+    y = df.iloc[:, -1]
+    X = df.iloc[:, :-1]
+    return (X, y)

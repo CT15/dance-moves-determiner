@@ -3,58 +3,13 @@ import pickle
 import time
 import pandas as pd
 import numpy as np
-import train_data 
-import matplotlib.pyplot as plt
-import seaborn as sn
+import train_data
+import preprocess as prep
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
-from sklearn.metrics import f1_score, confusion_matrix
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from termcolor import colored
-
-# This method split dfs to train_df and test_df
-# based on timestamp. The first `train_percent` of all
-# the input dfs will be grouped into train_df. The rest
-# are grouped into test_df.
-def split_train_test(dfs, train_percent=0.8):
-    train_df = pd.DataFrame()
-    test_df = pd.DataFrame()
-
-    for df in dfs:
-        train_len = round(len(df) * train_percent)
-        train_df = train_df.append(df.loc[0:train_len, :])
-        test_df = test_df.append(df.loc[train_len:len(df), :])
-    
-    return (train_df, test_df)
-
-
-def get_X_y(df):
-    y = df.iloc[:, -1]
-    X = df.iloc[:, :-1]
-    return (X, y)
-
-
-def evaluate(model, X_train, y_train, X_test, y_test):
-    train_score = model.score(X_train, y_train)
-    test_score = model.score(X_test, y_test)
-
-    y_pred = model.predict(X_test)
-    f1 = f1_score(y_test, y_pred, average='weighted')
-
-    print(colored("[EVAL]", "blue"), " f1 = " + str(f1) + "\t\ttrain_score =  " + str(train_score) + "\t\ttest_score = " + str(test_score))
-    
-    print(colored("[EVAL]", "blue"), " Generating confusion matrix ...")
-
-    confusion_matrix = confusion_matrix(y_test, y_pred)
-    print(pd.DataFrame(confusion_matrix))
-
-    df_cm = pd.DataFrame(confusion_matrix, index=[i for i in range(11)+1], columns=[i for i in range(11)+1])
-    plt.figure(figsize=(10,7))
-    sn.set(font_scale=1.4)
-    sn.heatmap(df_cm, annot=True, annot_kws={"size": 16})
-
-    return test_score
-
+from evaluate import evaluate
 
 # Generate random_forest.sav and save it to model folder
 def generate_random_forest(train_df, test_df):
@@ -101,8 +56,8 @@ def generate_random_forest(train_df, test_df):
     clf = RandomForestClassifier()
     clf_random = RandomizedSearchCV(estimator=clf, param_distributions=random_grid, n_iter=100, cv=3, verbose=2, random_state=37, n_jobs=-1)
     
-    X_train, y_train = get_X_y(train_df)
-    X_test, y_test = get_X_y(test_df)
+    X_train, y_train = prep.get_X_y(train_df)
+    X_test, y_test = prep.get_X_y(test_df)
     
     print(colored("[RF]", "green"), " Start Random Search fitting ...")
     clf_random.fit(X_train, y_train)
@@ -194,43 +149,9 @@ def generate_random_forest(train_df, test_df):
     
     print(colored("[RF]", "green"), " Random Forest model saved")  
     
-    # print("Start choosing n_estimator for random forest")
-    
-    # max_score = -1
-    # estimator_chosen = -1
-    # f1_max = 0
-
-    # for estimator in range(1, 350, 3):
-    #     clf = RandomForestClassifier(n_estimators=estimator, random_state=2, oob_score=False)
-    #     clf.fit(X_train, y_train)
-    #     train_score = clf.score(X_train, y_train)
-    #     test_score = clf.score(X_test, y_test)
-        
-    #     y_pred = clf.predict(X_test)
-    #     f1 = f1_score(y_test, y_pred, average='weighted')
-
-    #     print("RF: n_estimator = " + str(estimator) + "\t\tf1 = " + str(f1) + "\t\ttrain_score =  " + str(train_score) + "\t\ttest_score = " + str(test_score))
-
-    #     if f1 > f1_max:
-    #         f1_max = f1
-    #         estimator_chosen = estimator
-
-    # print("= = = = = = = = = = =")
-    # print("RF: final n_estimator chosen = " + str(estimator_chosen))
-    
-    # print("Generating Random Forest model")
-    
-    # clf = RandomForestClassifier(n_estimators=estimator_chosen, random_state=2, oob_score=False)
-    
-    # X_df = pd.concat([X_train, X_test], axis=0)
-    # y_df = pd.concat([y_train, y_test], axis=0)
-    # clf.fit(X_df, y_df)
-
-    # print("final_train_score = " + str(clf.score(X_df, y_df)))
-
 
 if __name__ == "__main__":
-    train_df, test_df = split_train_test(train_data.load())
+    train_df, test_df = prep.split_train_test(train_data.load())
     print(colored("[CHECK]", "magenta"), " Total train data:\t" + str(len(train_df)))
     print(colored("[CHECK]", "magenta"), " Total test data:\t" + str(len(test_df)))
     generate_random_forest(train_df, test_df)
