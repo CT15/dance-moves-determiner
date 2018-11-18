@@ -9,6 +9,8 @@ from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from termcolor import colored
 from evaluate import evaluate
 
+####NOTE: comment out 1/2 of data in train_data.py before running this code
+
 # Generate svc.sav and save it to model folder
 def generate_svc(train_df, test_df):
     file = open('./eval_results/svc_train_stats.txt', 'w+')
@@ -26,11 +28,11 @@ def generate_svc(train_df, test_df):
     print("Creating parameter grid for random search ...")
 
     #Degree of the polynomial kernel function (‘poly’)
-    degree = [1,2,3,4]
+    degree = [2,4,8]
     # Specifies the kernel type to be used in the algorithm
-    kernel = ['poly']
+    kernel = ['poly','rbf']
     # Maximum number of levels in tree
-    gamma = ['auto',0.01,0.04,0.06]
+    gamma = [0.1,0.3,0.5,0.7]
 
     random_grid = {'degree': degree,
                    'kernel': kernel,
@@ -49,7 +51,7 @@ def generate_svc(train_df, test_df):
 
     # Base model to tune
     clf = SVC()
-    clf_random = RandomizedSearchCV(estimator=clf, param_distributions=random_grid, n_iter=2, cv=3, verbose=2, random_state=37, n_jobs=-1)
+    clf_random = RandomizedSearchCV(estimator=clf, param_distributions=random_grid, n_iter=5, cv=3, verbose=2, random_state=37, n_jobs=-1)
 
     X_train, y_train = prep.get_X_y(train_df)
     X_test, y_test = prep.get_X_y(test_df)
@@ -82,11 +84,11 @@ def generate_svc(train_df, test_df):
     print(colored("[SVC]", "green"), " Creating parameter grid for grid search ...")
 
     # Number of trees in random forest
-    degree = [bp['degree']]
+    degree = [bp['degree'],bp['degree']+1]
     # Number of features to consider at every split
     kernel = [bp['kernel']]
     # Maximum number of levels in tree
-    gamma = [bp['gamma']+0.01,bp['gamma']+0.02]
+    gamma = [bp['gamma']-0.05,bp['gamma']+0.05,bp['gamma']+0.1]
 
     param_grid = {'degree': degree,
                   'kernel': kernel,
