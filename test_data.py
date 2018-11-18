@@ -25,12 +25,12 @@ def load(with_names=False):
     sarah_number7_test = prepare_data('sarah_number7_test', 1)
     sarah_chicken_test = prepare_data('sarah_chicken_test', 2)
     sarah_sidestep_test = prepare_data('sarah_sidestep_test', 3)
-    sarah_turnclap1_test = prepare_data('sarah_turnclap_test', 4)
+    sarah_turnclap_test = prepare_data('sarah_turnclap_test', 4)
     sarah_number6_test = prepare_data('sarah_number6_test', 5)
     sarah_salute_test = prepare_data('sarah_salute_test', 6)
     sarah_mermaid_test = prepare_data('sarah_mermaid_test', 7)
     sarah_swing_test = prepare_data('sarah_swing_test', 8)
-    sarah_cowboy1_test = prepare_data('sarah_cowboy_test', 9)
+    sarah_cowboy_test = prepare_data('sarah_cowboy_test', 9)
     sarah_finalmove_test = prepare_data('sarah_finalmove_test', 10)
 
     all_tests.extend([
