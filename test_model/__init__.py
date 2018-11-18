@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import numpy as np
 
-# Return a flattened df of the specified feature (either 'max_min' or 'std')
+# Return a flattened df of the specified feature (either 'max_min' or 'var')
 def flatten(df, feature='max_min', interval=80):
     result_df = pd.DataFrame()
 
@@ -17,7 +17,7 @@ def flatten(df, feature='max_min', interval=80):
             max_minus_min = pd.Series(np.ptp(subset[subset.columns].values, axis=0))
             result_df = result_df.append(max_minus_min, ignore_index=True)
 
-        if feature == 'std':
+        if feature == 'var':
             var = pd.Series(np.var(subset[subset.columns].values, axis=0))
             result_df = result_df.append(var, ignore_index=True)
 
@@ -53,15 +53,15 @@ class MLModel:
         PATH_TO_MODEL = sys.path[0] + '/models'
         self.RF = pickle.load(open(PATH_TO_MODEL + '/random_forest.sav', 'rb'))
         # self.SVM = pickle.load(open(PATH_TO_MODEL + '/svm.sav', 'rb'))
-    
+
 
     # This method is called when dance moves are required to be
     # predicted in real time. Return one dance label in the form
     # of the actual dance move.
     def predict(self, df):
         df_max_min = flatten(df, interval=len(df))
-        df_std = flatten(df, 'std', interval=len(df))
-        df_concat = concat_df(df_max_min, df_std)
+        df_var = flatten(df, 'var', interval=len(df))
+        df_concat = concat_df(df_max_min, df_var)
 
         predicted_RF = self.RF.predict(df_concat)
         # predicted_SVM = self.SVM.predict(df_concat)
@@ -71,7 +71,7 @@ class MLModel:
 
         return self.DANCES[predicted_RF[0]]
 
-    
+
     # This method is used only in test.py where real-time prediction
     # is not required.
     def test_predict(self, df):
