@@ -25,12 +25,12 @@ def generate_svc(train_df, test_df):
 
     print("Creating parameter grid for random search ...")
 
-    # Number of trees in random forest
-    degree = [int(x) for x in np.linspace(start=2, stop=4,num=2)]
-    # Number of features to consider at every split
+    #Degree of the polynomial kernel function (‘poly’)
+    degree = [1,2,3,4]
+    # Specifies the kernel type to be used in the algorithm
     kernel = ['poly']
     # Maximum number of levels in tree
-    gamma = ['auto']
+    gamma = ['auto',0.01,0.04,0.06]
 
     random_grid = {'degree': degree,
                    'kernel': kernel,
@@ -70,7 +70,8 @@ def generate_svc(train_df, test_df):
 
     print(colored("[SVC]", "green"), " Initializing base model ...")
 
-    base_model = SVC(degree=bp['degree'], kernel=bp['kernel'],
+    base_model = SVC(degree=bp['degree'],
+                  kernel=bp['kernel'],
                                         gamma=bp['gamma'])
     base_model.fit(X_train, y_train)
 
@@ -85,7 +86,7 @@ def generate_svc(train_df, test_df):
     # Number of features to consider at every split
     kernel = [bp['kernel']]
     # Maximum number of levels in tree
-    gamma = [bp['gamma']]
+    gamma = [bp['gamma']+0.01,bp['gamma']+0.02]
 
     param_grid = {'degree': degree,
                   'kernel': kernel,
@@ -119,7 +120,8 @@ def generate_svc(train_df, test_df):
     file.write("\n")
 
     print(colored("[SVC]", "green"), " Initializing best grid model ...")
-    grid_model = SVC(degree=bp['degree'], kernel=bp['kernel'],
+    grid_model = SVC(degree=bp['degree'],
+                     kernel=bp['kernel'],
                                         gamma=bp['gamma'])
 
     grid_model.fit(X_train, y_train)
